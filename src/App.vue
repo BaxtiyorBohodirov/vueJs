@@ -1,26 +1,42 @@
 <template>
-  <img alt="Vue logo" src="./assets/logo.png">
-  <HelloWorld msg="Welcome to Your Vue.js App"/>
+  <div id="app">
+    <router-view></router-view>    
+  </div>
 </template>
-
 <script>
-import HelloWorld from './components/HelloWorld.vue'
-
+import {mapGetters, mapActions} from "vuex"
 export default {
   name: 'App',
-  components: {
-    HelloWorld
-  }
+  data(){
+    return {
+      toPost:0
+    }
+  },
+  computed:mapGetters(["allPosts","postCount"]),
+  methods:{
+    ...mapActions(['fethchPosts']),
+    postId(id)
+    {
+      this.toPost=id
+    },
+    },
+  async mounted()
+  {
+    this.fethchPosts(5);
+  },
 }
 </script>
-
 <style>
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
-}
+  #app .posts, .post
+  {
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;    
+    align-items: center;
+  }
+  .card
+  {
+    width:80%;
+    margin:10px;
+  }
 </style>
